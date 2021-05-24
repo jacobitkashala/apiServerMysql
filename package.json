@@ -5,11 +5,10 @@
     "main": "app.js",
     "scripts": {
         "start": "node app.js",
-        "dev": "nodemon app.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "dev": "nodemon ./app.js --exec babel-node -e js"
     },
     "keywords": [],
-    "author": "",
+    "author": "jacobit",
     "license": "ISC",
     "dependencies": {
         "cors": "^2.8.5",
@@ -20,5 +19,11 @@
         "nodemon": "^2.0.7",
         "request": "^2.88.2",
         "reuest": "0.0.1-security"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.14.3",
+        "@babel/core": "^7.14.3",
+        "babel-cli": "^6.26.0",
+        "babel-preset-env": "^1.7.0"
     }
 }

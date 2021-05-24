@@ -3,7 +3,10 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
+app.use(express.json());
+
 let robotDataAll = [{ image: "" }];
+let robotDataCurrent = [];
 async function getRobots() {
     await fetch("https://jsonplaceholder.typicode.com/users")
         .then(data => {
