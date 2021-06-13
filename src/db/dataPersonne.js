@@ -1,5 +1,5 @@
 const dataAll={
-    userInfos:{
+    mesInformation:{
         nom:"Kashala",
         postNom:"mukendi",
         prenom:"Jacobit",
