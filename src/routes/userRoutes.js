@@ -1,17 +1,17 @@
-import {
-    getInformation,
-    getPorjet,
-    postPorjet }   from "../controllers/usersControllers";
+import {testConnection,
+    getLogin }   from "../controllers/usersControllers";
 
     function routes(app){
+        testConnection();
+        
         //information Personnel ;
         app.route('/api/information') 
-        .get(getInformation)
+        .get(getLogin)
         
-        // app.route('/api/portofolio/information/:Id') 
-        // .put( (req, resp) => {
-        //     resp.send('un Put avec succé')
-        // })
+        app.route('/api/information/:Id') 
+        .put( (req, resp) => {
+            resp.send('un Put avec succé')
+        })
         // .delete( (req, resp) => {
         //     resp.send('un Delete avec succé');
         // });
