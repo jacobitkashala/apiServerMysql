@@ -1,32 +1,33 @@
-import {testConnection,
-    getLogin }   from "../controllers/usersControllers";
+import {
+    getLogin,
+    getInformation,
+    updateInnformation
+} from "../controllers/usersControllers";
 
-    function routes(app){
-        testConnection();
-        
-        //information Personnel ;
-        app.route('/api/information') 
+function routes(app) {
+    //information login;
+    app.route('/api/information/login')
         .get(getLogin)
-        
-        app.route('/api/information/:Id') 
-        .put( (req, resp) => {
-            resp.send('un Put avec succé')
-        })
-        // .delete( (req, resp) => {
-        //     resp.send('un Delete avec succé');
-        // });
-        // //Projet
-        // app.route('/api/portofolio/projets') 
+
+    //mes informations person
+    app.route('/api/information')
+        .get(getInformation);
+
+    app.route('/api/information/:password')
+        .put(updateInnformation);
+
+    //Projet
+    app.route('/api/portofolio/projets')
         // .get(getPorjet)
-        // .post(postPorjet);
+        .post(postPorjet);
 
-        // app.route('/api/portofolio/projets/:projetId') 
-        // .put( (req, resp) => {
-        //     resp.send('un Put avec succé')
-        // })
-        // .delete( (req, resp) => {
-        //     resp.send('un Delete avec succé')
-        // });
-    }
+    // app.route('/api/portofolio/projets/:projetId') 
+    // .put( (req, resp) => {
+    //     resp.send('un Put avec succé')
+    // })
+    // .delete( (req, resp) => {
+    //     resp.send('un Delete avec succé')
+    // });
+}
 
-export default routes 
+export default routes

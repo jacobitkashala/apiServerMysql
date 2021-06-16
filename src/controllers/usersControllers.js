@@ -1,5 +1,7 @@
 import Mysql from "mysql";
+const { v4: uuidv4 } = require("uuid");
 
+let pswd = "priscille@serge";
 
 const connection = Mysql.createConnection(
     {
@@ -9,41 +11,95 @@ const connection = Mysql.createConnection(
         database: process.env.DATABASE || 'gestion_porto',
     }
 )
+// function commandSql(commandQuery) {
+//     connection.query("select * from framwork", (error, resultat) => {
+//         if (error) console.log("error lor du select");
+//         else {
+//             return resultat;
+//         }
+//         return {error, resultat};
+//     })
+// }
+
+const isEmpty = (arrayData) => {
+    return arrayData.some(data => data.length === 0);
+}
+
 export const testConnection = () => {
     connection.connect((err) => {
         if (err) console.log("erreur :" + err);
-
         else console.log("connection etablis");
-
     })
 }
+//login
+export const getLogin = (req, resp) => {
+    connection.query("SELECT * FROM login", (error, resultat) => {
+        if (error) console.log("error lor du select");
+        else resp.status(200).json(resultat);
+    })
+}
+//information
+export const getInformation = ((req, resp) => {
+    connection.query("select * from information", (error, resultat) => {
+        if (error) console.log("error lor du select");
+        else {
+            resp.status(200).
+                json(resultat);
+        }
+    })
+})
 
-export const getLogin =  
-    (req,resp)=>{
-        connection.query("SELECT * FROM login", (error, resultat) => {
+export const updateInnformation = ((req, resp) => {
+    const password = req.params.password;
+    const { nom, postNom, prenom, ville, pays, niveau, telephone, nationalite } = req.body;
+    let updateInfo = [nom, postNom, prenom, ville, pays, niveau, telephone, nationalite];
+    let test = isEmpty(newInfo);
+    let commandSql = "UPDATE information SET nom=?,postNom=?,prenom=?,ville=?,pays=?,niveau=?,telephone=?,nationalite=?";
+
+    if (password === pswd && !test) {
+        connection.query(commandSql, updateInfo, (error, resultat) => {
             if (error) console.log("error lor du select");
-            else resp.status(200).json(resultat);
-            console.log(resultat);
+            else {
+                resp.status(200).
+                    json(resultat);
+            }
+        })
+    } else {
+        resp.send({ message: "error" });
+    }
+})
+
+//framwork
+export const getFramwork = ((req, resp) => {
+    connection.query("select * from framwork", (error, resultat) => {
+        if (error) console.log("error lor du select");
+        else {
+            return resp.status(200).
+                json(resultat);
+        }
+    })
+})
+
+//projets
+export const postApplicatoin = ((req, resp) => {
+    const { nom, description, client, image } = req.body;
+    newApp = [nom, description, client, image];
+    let test = isEmpty(newApp);
+
+    if (!test) {
+        let id = uuidv4();
+        connection.query("INSERT INTO application value(?,?,?,?)", [id, newApp], (err, resultat) => {
+            if (!err) {
+                resp.status(200).
+                    json(resultat)
+            }
         })
     }
-        
-
-   
 
 
-//information personnel
-
-// export const getInformation=((req,resp)=>{
-//    resp.send(mesInformation);
-
-// })
-// export const updateInnformation=((req,resp)=>{
-
-// })  
-
-// // les differents projets
-// export const getPorjet=((req,resp)=>{
-//     resp.send(projetRealiser)
+})
+// export const getApplicatoin=((req,resp)=>{
+//     resp.send();
 // }) 
 
 // export const postPorjet=((req,resp)=>{
