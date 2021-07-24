@@ -1,7 +1,14 @@
 import {
     getLogin,
     getInformation,
-    updateInnformation
+    updateInformation,
+    getApplication,
+    postApplication,
+    deleteApplication,
+    updateApplication,
+    getLangage,
+    postLangage
+
 } from "../controllers/usersControllers";
 
 function routes(app) {
@@ -14,20 +21,24 @@ function routes(app) {
         .get(getInformation);
 
     app.route('/api/information/:password')
-        .put(updateInnformation);
+        .put(updateInformation);
 
-    //Projet
-    app.route('/api/portofolio/projets')
-        // .get(getPorjet)
-        .post(postPorjet);
+    //Application
+    app.route('/api/application')
+        .get(getApplication)
+        .post(postApplication);
 
-    // app.route('/api/portofolio/projets/:projetId') 
-    // .put( (req, resp) => {
-    //     resp.send('un Put avec succé')
-    // })
-    // .delete( (req, resp) => {
-    //     resp.send('un Delete avec succé')
-    // });
+    app.route('/api/application/:Id')
+        .put(updateApplication)
+        .delete(deleteApplication);
+    //Application
+    app.route('/api/langageprogrammation')
+        .get(getLangage)
+        .post(postLangage);
+
+    // app.route('/api/langageprogrammation:Id')
+    //     .put(updateApplication)
+    //     .delete(deleteApplication);
 }
 
 export default routes

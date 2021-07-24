@@ -1,6 +1,7 @@
 import Mysql from "mysql";
 const { v4: uuidv4 } = require("uuid");
 
+
 let pswd = "priscille@serge";
 
 const connection = Mysql.createConnection(
@@ -40,6 +41,7 @@ export const getLogin = (req, resp) => {
 }
 //information
 export const getInformation = ((req, resp) => {
+    console.log("Get")
     connection.query("select * from information", (error, resultat) => {
         if (error) console.log("error lor du select");
         else {
@@ -49,7 +51,8 @@ export const getInformation = ((req, resp) => {
     })
 })
 
-export const updateInnformation = ((req, resp) => {
+export const updateInformation = ((req, resp) => {
+
     const password = req.params.password;
     const { nom, postNom, prenom, ville, pays, niveau, telephone, nationalite } = req.body;
     let updateInfo = [nom, postNom, prenom, ville, pays, niveau, telephone, nationalite];
@@ -69,6 +72,89 @@ export const updateInnformation = ((req, resp) => {
     }
 })
 
+//Application
+export const getApplication = ((req, resp) => {
+
+    connection.query("select * from application", (error, resultat) => {
+        if (error) console.log("error lor du select");
+        else {
+            resp.status(200).
+                json(resultat);
+        }
+    })
+})
+export const postApplication = ((req, resp) => {
+
+    const { nameApp, descrApp, nameClient } = req.body;
+    const image = "https://image1";
+    const idApp = uuidv4();
+    let newApp = [nameApp, descrApp, nameClient];
+    let test = isEmpty(newApp);
+    if (!test) {
+        connection.query("INSERT INTO application value(?,?,?,?,?)", [idApp, nameApp, descrApp, nameClient, image], (err, resultat) => {
+            if (!err) {
+                resp.status(200).
+                    json(resultat)
+            }
+        })
+    }
+})
+export const deleteApplication = ((req, resp) => {
+    const idApp = req.params.Id;
+    connection.query("DELETE FROM application WHERE application_id=?", [idApp], (err, resultat) => {
+        if (!err) {
+            resp.status(200).
+                json(resultat)
+        }
+    })
+})
+export const updateApplication = ((req, resp) => {
+    console.log("Update");
+    //console.log(req.params.id);
+    // const { nameApp, descrApp, nameClient } = req.body;
+    // const image = "https://image1";
+    // const idApp = uuidv4();
+    // let newApp = [nameApp, descrApp, nameClient];
+    // let test = isEmpty(newApp);
+
+    // if (!test) {
+    //     connection.query("INSERT INTO application value(?,?,?,?,?)", [idApp, nameApp, descrApp, nameClient, image], (err, resultat) => {
+    //         if (!err) {
+    //             resp.status(200).
+    //                 json(resultat)
+    //         }
+    //     })
+    // }
+})
+
+//Langage de programmation
+export const getLangage = ((req, resp) => {
+    connection.query("select * from langage", (error, resultat) => {
+        if (!error) {
+            resp.status(200).
+                json(resultat);
+        }
+    })
+})
+export const postLangage = ((req, resp) => {
+    console.log(req.body)
+    const { nameCompt, levelCompt } = req.body;
+
+    const idCompt = uuidv4();
+    let newApp = [nameCompt, levelCompt];
+    let test = isEmpty(newApp);
+
+    if (!test) {
+        connection.query("INSERT INTO langage value(?,?,?)", [idCompt, nameCompt, levelCompt], (err, resultat) => {
+            if (!err) {
+                resp.status(200);
+            }
+            console.log(err);
+        })
+    }
+
+})
+
 //framwork
 export const getFramwork = ((req, resp) => {
     connection.query("select * from framwork", (error, resultat) => {
@@ -79,46 +165,3 @@ export const getFramwork = ((req, resp) => {
         }
     })
 })
-
-//projets
-export const postApplicatoin = ((req, resp) => {
-    const { nom, description, client, image } = req.body;
-    newApp = [nom, description, client, image];
-    let test = isEmpty(newApp);
-
-    if (!test) {
-        let id = uuidv4();
-        connection.query("INSERT INTO application value(?,?,?,?)", [id, newApp], (err, resultat) => {
-            if (!err) {
-                resp.status(200).
-                    json(resultat)
-            }
-        })
-    }
-
-
-})
-// export const getApplicatoin=((req,resp)=>{
-//     resp.send();
-// }) 
-
-// export const postPorjet=((req,resp)=>{
-//    const newProjet=req.body.data;
-//    resp.status(201);
-//     console(dataProjet)
-// }) 
-
-// //langage de programmation
-// export const getLangageProgrammation=((req,resp)=>{
-//     resp.send(langageProgrammation);
-// }) 
-// export const postLangageProgrammation=((req,resp)=>{
-//     resp.send(langageProgrammation);
-// }) 
-// //console.log(BaseDonnee);
-// //base de données
-// // export const getUserLangageProgrammation=((req,resp)=>{
-// //     resp.send(BaseDonnee);
-// // })
-
-
