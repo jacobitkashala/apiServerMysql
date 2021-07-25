@@ -1,15 +1,16 @@
 import Mysql from "mysql";
 const { v4: uuidv4 } = require("uuid");
+require('dotenv').config();
 
 
 let pswd = "priscille@serge";
 
 const connection = Mysql.createConnection(
     {
-        host: process.env.DB_HOST || '127.0.0.1',
-        user: process.env.DB_USER || 'pierre',
-        password: process.env.DB_PASSWORD || '',
-        database: process.env.DATABASE || 'gestion_porto',
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DATABASE,
     }
 )
 
@@ -44,6 +45,7 @@ export const getLogin = (req, resp) => {
 }
 //information
 export const getInformation = ((req, resp) => {
+    console.log(process.env.DB_HOST)
 
     connection.query("select * from information", (error, resultat) => {
         if (error) console.log("error lor du select");
