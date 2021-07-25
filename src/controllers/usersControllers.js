@@ -12,15 +12,6 @@ const connection = Mysql.createConnection(
         database: process.env.DATABASE || 'gestion_porto',
     }
 )
-// function commandSql(commandQuery) {
-//     connection.query("select * from framwork", (error, resultat) => {
-//         if (error) console.log("error lor du select");
-//         else {
-//             return resultat;
-//         }
-//         return {error, resultat};
-//     })
-// }
 
 const isEmpty = (arrayData) => {
     return arrayData.some(data => data.length === 0);
@@ -34,14 +25,26 @@ export const testConnection = () => {
 }
 //login
 export const getLogin = (req, resp) => {
-    connection.query("SELECT * FROM login", (error, resultat) => {
-        if (error) console.log("error lor du select");
-        else resp.status(200).json(resultat);
-    })
+
+    if (req.session.views) {
+        req.session.views++
+        resp.setHeader('Content-Type', 'text/html')
+        resp.write('<p>views: ' + req.session.views + '</p>')
+        resp.write('<p>expires in: ' + (req.session.cookie.maxAge / 1000) + 's</p>')
+        resp.end()
+    } else {
+        console.log(req.sessionID)
+        req.session.views = 1
+        resp.end('welcome to the session demo. refresh!')
+    }
+    // connection.query("SELECT * FROM login", (error, resultat) => {
+    //     if (error) console.log("error lor du select");
+    //     else resp.status(200).json(resultat);
+    // })
 }
 //information
 export const getInformation = ((req, resp) => {
-    console.log("Get")
+
     connection.query("select * from information", (error, resultat) => {
         if (error) console.log("error lor du select");
         else {
