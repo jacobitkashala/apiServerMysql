@@ -26,18 +26,26 @@ export const testConnection = () => {
 }
 //login
 export const getLogin = (req, resp) => {
-
-    if (req.session.views) {
-        req.session.views++
-        resp.setHeader('Content-Type', 'text/html')
-        resp.write('<p>views: ' + req.session.views + '</p>')
-        resp.write('<p>expires in: ' + (req.session.cookie.maxAge / 1000) + 's</p>')
-        resp.end()
+    console.log(req.session.user);
+    if (req.session.user) {
+        resp.send({
+            loggedIn: true,
+            user: req.session.user
+        })
     } else {
-        console.log(req.sessionID)
-        req.session.views = 1
-        resp.end('welcome to the session demo. refresh!')
+        resp.send({ loggedIn: false })
     }
+    //resp.status(200).json({ "message": "ok" })
+    // if (req.session.views) {
+    //     req.session.views++
+    //     resp.setHeader('Content-Type', 'text/html')
+    //     resp.write('<p>views: ' + req.session.views + '</p>')
+    //     resp.write('<p>expires in: ' + (req.session.cookie.maxAge / 1000) + 's</p>')
+    //     resp.end()
+    // } else {
+    //     req.session.views = 1
+    //     resp.end('welcome to the session demo. refresh!')
+    // }
     // connection.query("SELECT * FROM login", (error, resultat) => {
     //     if (error) console.log("error lor du select");
     //     else resp.status(200).json(resultat);

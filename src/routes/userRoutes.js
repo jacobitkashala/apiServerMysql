@@ -14,7 +14,7 @@ import {
 function routes(app) {
     //information login;
     app.route('/api/information/login')
-        .get(getLogin)
+        .post(getLogin)
 
     //mes informations person
     app.route('/api/information')
