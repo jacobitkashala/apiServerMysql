@@ -1,20 +1,24 @@
 import {
     getLogin,
+    postLogin,
+    getLangage,
+    postLangage,
     getInformation,
     updateInformation,
     getApplication,
     postApplication,
     deleteApplication,
     updateApplication,
-    getLangage,
-    postLangage
+
 
 } from "../controllers/usersControllers";
 
 function routes(app) {
     //information login;
     app.route('/api/information/login')
-        .post(getLogin)
+        .post(postLogin)
+        .get(getLogin)
+
 
     //mes informations person
     app.route('/api/information')
