@@ -1,0 +1,30 @@
+{
+	"sqltools.connections": [
+		{
+			"mysqlOptions": {
+				"authProtocol": "default"
+			},
+			"previewLimit": 50,
+			"server": "localhost",
+			"port": 3306,
+			"driver": "MySQL",
+			"name": "basePortfolioLocal",
+			"database": "portfolio",
+			"username": "jaco",
+			"password": "1234"
+		},
+		{
+			"mysqlOptions": {
+				"authProtocol": "default"
+			},
+			"previewLimit": 50,
+			"server": "ba2p3trgs9vrowuqvc6i-mysql.services.clever-cloud.com",
+			"port": 3306,
+			"askForPassword": true,
+			"driver": "MySQL",
+			"name": "porfCloud",
+			"database": "ba2p3trgs9vrowuqvc6i",
+			"username": "uumg6iwu5jby83o2"
+		}
+	]
+}
